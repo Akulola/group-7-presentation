@@ -10,7 +10,7 @@ const App = () => {
   }, []);
 
   const fetchMembers = () => {
-    fetch('https://my-json-server.typicode.com/Akulola/group-7-presentation/members', {
+    fetch('http://localhost:3000/members', {
       method: 'GET',
     })
       .then((response) => response.json())

@@ -11,7 +11,7 @@ const CreateMemberForm = ({ onMemberCreated }) => {
     e.preventDefault();
 
     // Make a POST request to create a new member
-    fetch('https://my-json-server.typicode.com/Akulola/group-7-presentation/members', {
+    fetch('http://localhost:3000/members', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

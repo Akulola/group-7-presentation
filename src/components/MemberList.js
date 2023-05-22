@@ -6,7 +6,7 @@ const MemberList = ({ members, onDelete, onUpdate }) => {
 
   const handleDelete = (id) => {
     // Make a DELETE request to remove the member
-    fetch(`https://my-json-server.typicode.com/Akulola/group-7-presentation/members/${id}`, {
+    fetch(`http://localhost:3000/members/${id}`, {
       method: 'DELETE',
     })
       .then(() => {
@@ -19,7 +19,7 @@ const MemberList = ({ members, onDelete, onUpdate }) => {
 
   const handleUpdate = (updatedMember) => {
     // Make a PUT request to update the member
-    fetch(`https://my-json-server.typicode.com/Akulola/group-7-presentation/members/${updatedMember.id}`, {
+    fetch(`http://localhost:3000/members/${updatedMember.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
