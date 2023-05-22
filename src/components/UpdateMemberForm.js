@@ -10,21 +10,12 @@ const UpdateMemberForm = ({ member, onUpdate }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Make a PUT request to update the member
-    fetch(`https://my-json-server.typicode.com/Akulola/group-7-presentation/members/${member.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        onUpdate(data); // Pass the updated member data to the parent component
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    const updatedMember = {
+      ...member,
+      name: name,
+    };
+
+    onUpdate(updatedMember);
   };
 
   return (
@@ -43,7 +34,6 @@ const UpdateMemberForm = ({ member, onUpdate }) => {
       </div>
     </form>
   );
-  
 };
 
 export default UpdateMemberForm;
