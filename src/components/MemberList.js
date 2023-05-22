@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import UpdateMemberForm from './UpdateMemberForm';
 
-const MemberList = ({ members, onDelete }) => {
+const MemberList = ({ members, onDelete, onUpdate }) => {
+  const [editingMemberId, setEditingMemberId] = useState(null);
+
   const handleDelete = (id) => {
     // Make a DELETE request to remove the member
-    fetch(`/db.json/members/${id}`, {
+    fetch(`https://my-json-server.typicode.com/Akulola/group-7-presentation/members/${id}`, {
       method: 'DELETE',
     })
       .then(() => {
@@ -14,17 +17,55 @@ const MemberList = ({ members, onDelete }) => {
       });
   };
 
+  const handleUpdate = (updatedMember) => {
+    // Make a PUT request to update the member
+    fetch(`https://my-json-server.typicode.com/Akulola/group-7-presentation/members/${updatedMember.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedMember),
+    })
+      .then(() => {
+        onUpdate(updatedMember); // Pass the updated member object to the parent component
+        setEditingMemberId(null); // Reset the editing member ID
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
+  const handleCancelUpdate = () => {
+    setEditingMemberId(null); // Reset the editing member ID when canceling the update
+  };
+
   return (
     <ul className="list-group">
       {members.map((member) => (
         <li key={member.id} className="list-group-item d-flex justify-content-between align-items-center">
-          {member.name}
-          <button onClick={() => handleDelete(member.id)} className="btn btn-danger">Delete</button>
+          {editingMemberId === member.id ? (
+            <UpdateMemberForm
+              member={member}
+              onUpdate={handleUpdate}
+              onCancelUpdate={handleCancelUpdate}
+            />
+          ) : (
+            <>
+              {member.name}
+              <div>
+                <button onClick={() => setEditingMemberId(member.id)} className="btn btn-primary mr-2">
+                  Edit
+                </button>
+                <button onClick={() => handleDelete(member.id)} className="btn btn-danger">
+                  Delete
+                </button>
+              </div>
+            </>
+          )}
         </li>
       ))}
     </ul>
   );
-  
 };
 
 export default MemberList;

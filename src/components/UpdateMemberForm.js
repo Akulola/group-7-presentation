@@ -11,7 +11,7 @@ const UpdateMemberForm = ({ member, onUpdate }) => {
     e.preventDefault();
 
     // Make a PUT request to update the member
-    fetch(`/db.json/members/${member.id}`, {
+    fetch(`https://my-json-server.typicode.com/Akulola/group-7-presentation/members/${member.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

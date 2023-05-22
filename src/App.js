@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import CreateMemberForm from './components/CreateMemberForm';
 import MemberList from './components/MemberList';
-import UpdateMemberForm from './components/UpdateMemberForm';
 
 const App = () => {
   const [members, setMembers] = useState([]);
-  
+
   useEffect(() => {
-    fetch('/db.json')
-      .then(response => response.json())
-      .then((data) => setMembers(data.member))
-      .catch((error) =>  console.error('Error:', error));
+    fetchMembers();
   }, []);
+
+  const fetchMembers = () => {
+    fetch('https://my-json-server.typicode.com/Akulola/group-7-presentation/members')
+      .then((response) => response.json())
+      .then((data) => {
+        setMembers(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 
   const handleMemberCreated = (newMember) => {
     setMembers([...members, newMember]);
@@ -33,14 +40,11 @@ const App = () => {
     <div className="container">
       <h1 className="my-4">Group 7 CRUD App</h1>
       <CreateMemberForm onMemberCreated={handleMemberCreated} />
-      <MemberList members={members} onDelete={handleMemberDeleted} />
-      {members.map((member) => (
-        <UpdateMemberForm
-          key={member.id}
-          member={member}
-          onUpdate={handleMemberUpdated}
-        />
-      ))}
+      <MemberList
+        members={members}
+        onDelete={handleMemberDeleted}
+        onUpdate={handleMemberUpdated}
+      />
     </div>
   );
 };
