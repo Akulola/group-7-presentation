@@ -10,7 +10,9 @@ const App = () => {
   }, []);
 
   const fetchMembers = () => {
-    fetch('https://my-json-server.typicode.com/Akulola/group-7-presentation/members')
+    fetch('https://my-json-server.typicode.com/Akulola/group-7-presentation/members', {
+      method: 'GET',
+    })
       .then((response) => response.json())
       .then((data) => {
         setMembers(data);
@@ -19,6 +21,7 @@ const App = () => {
         console.error('Error:', error);
       });
   };
+  
 
   const handleMemberCreated = (newMember) => {
     setMembers([...members, newMember]);
